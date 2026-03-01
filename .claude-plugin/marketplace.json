@@ -7,11 +7,7 @@
   "plugins": [
     {
       "name": "legalant",
-      "source": {
-        "source": "github",
-        "repo": "ishwarjha/legalant",
-        "ref": "main"
-      },
+      "source": "./legalant",
       "description": "18-agent Indian legal AI: contract review, research, translation, redline, negotiation, MCA due diligence, and five practice area orchestrators",
       "version": "1.0.0",
       "author": {
