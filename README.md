@@ -211,4 +211,6 @@ Every agent output passes through a mandatory gate before any action is taken:
 
 ## Disclaimer
 
-LegalAnt assists qualified advocates. It does not provide legal advice and cannot substitute for professional legal judgment. Every agent output carries a mandatory disclaimer and must be reviewed by a qualified advocate before reliance or external communication.
+\*LegalAnt assists qualified advocates. It does not provide legal advice and cannot substitute for professional legal judgment. Every agent output carries a mandatory disclaimer and must be reviewed by a qualified advocate before reliance or external communication.
+
+-
