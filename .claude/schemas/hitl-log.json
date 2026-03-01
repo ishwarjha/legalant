@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Human-in-the-Loop Log",
+  "description": "Persistent log of all HITL events requiring human advocate review. All agents write here; humans resolve entries.",
+  "type": "object",
+  "required": ["matter_id", "entries"],
+  "properties": {
+    "matter_id": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["entry_id", "agent_name", "trigger_type", "trigger_reason", "timestamp", "status"],
+        "properties": {
+          "entry_id": {
+            "type": "string",
+            "description": "Unique HITL entry identifier",
+            "examples": ["HITL-LA-2024-001-001"]
+          },
+          "agent_name": {
+            "type": "string",
+            "description": "Name of the agent that triggered this HITL event"
+          },
+          "agent_version": { "type": "string" },
+          "trigger_type": {
+            "type": "string",
+            "enum": [
+              "low_confidence",
+              "high_risk",
+              "regulatory_deadline",
+              "fraud_indicator",
+              "cross_border_fema",
+              "criminal_implications",
+              "court_filing",
+              "contradictory_evidence",
+              "deal_breaker",
+              "client_instruction_needed",
+              "large_exposure",
+              "other"
+            ]
+          },
+          "trigger_reason": {
+            "type": "string",
+            "description": "Plain English explanation of why HITL was triggered"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the HITL event was triggered (IST)"
+          },
+          "task_description": {
+            "type": "string",
+            "description": "What task the agent was performing when HITL was triggered"
+          },
+          "agent_output_file": {
+            "type": ["string", "null"],
+            "description": "Path to the agent's partial output file for human review"
+          },
+          "question_for_human": {
+            "type": "string",
+            "description": "Specific, actionable question the agent needs the advocate to answer"
+          },
+          "options_presented": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "If the agent offers options for human to choose from"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Pending", "Reviewed", "Approved", "Rejected", "Modified", "Escalated"]
+          },
+          "human_reviewer": {
+            "type": ["string", "null"],
+            "description": "Name of the advocate who reviewed this entry"
+          },
+          "human_decision": {
+            "type": ["string", "null"],
+            "description": "The advocate's decision or instruction"
+          },
+          "human_notes": {
+            "type": ["string", "null"],
+            "description": "Additional notes from the reviewing advocate"
+          },
+          "reviewed_at": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "resolution": {
+            "type": ["string", "null"],
+            "description": "How the issue was resolved; what action was taken"
+          },
+          "follow_up_required": {
+            "type": "boolean",
+            "default": false,
+            "description": "True if this resolution requires a follow-up action"
+          },
+          "follow_up_notes": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "total_entries": { "type": "integer", "minimum": 0 },
+    "pending_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of entries with status = Pending"
+    },
+    "last_entry_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

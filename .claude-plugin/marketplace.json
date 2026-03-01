@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "name": "LegalAnt",
+  "id": "legalant",
+  "version": "1.0.0",
+  "description": "18-agent Indian legal AI system for in-house counsel, transactions, litigation, real estate, arbitration, banking & finance, and capital markets. Built on Claude Code subagents with full DOCX output, HITL gates, and state persistence.",
+  "author": "appetals",
+  "repository": "https://github.com/stayonbus/legalant",
+  "homepage": "https://github.com/stayonbus/legalant#readme",
+  "license": "MIT",
+  "category": "legal",
+  "tags": [
+    "legal",
+    "indian-law",
+    "contracts",
+    "due-diligence",
+    "litigation",
+    "arbitration",
+    "capital-markets",
+    "real-estate",
+    "banking-finance",
+    "docx",
+    "hitl"
+  ],
+  "requirements": {
+    "claude_version": ">=claude-3-5-sonnet-20241022",
+    "tools": ["file_system", "bash"]
+  },
+  "stats": {
+    "agents": 18,
+    "commands": 16,
+    "skills": 4
+  },
+  "modules": {
+    "layer1": [
+      "lexis",
+      "file-library-agent",
+      "legal-research-agent",
+      "redline-analysis-agent",
+      "translation-agent",
+      "mca-documents-agent",
+      "chronology-builder-agent",
+      "document-table-agent",
+      "document-review-agent"
+    ],
+    "layer2": [
+      "in-house-orchestrator",
+      "transactions-orchestrator",
+      "advisory-orchestrator",
+      "due-diligence-orchestrator"
+    ],
+    "layer3": [
+      "litigation-orchestrator",
+      "real-estate-orchestrator",
+      "arbitration-orchestrator",
+      "banking-finance-orchestrator",
+      "capital-markets-orchestrator"
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Legal Research Memo",
+  "description": "Structured legal research memo produced by the Research agent. All citations must be verified.",
+  "type": "object",
+  "required": ["memo_id", "matter_id", "question", "conclusion", "confidence"],
+  "properties": {
+    "memo_id": {
+      "type": "string",
+      "examples": ["MEMO-LA-2024-001-01"]
+    },
+    "matter_id": { "type": "string" },
+    "prepared_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" },
+    "prepared_at": { "type": "string", "format": "date-time" },
+    "question": {
+      "type": "string",
+      "description": "The precise legal question being researched (one question per memo)"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "default": "India",
+      "description": "Primary jurisdiction for the research"
+    },
+    "practice_area": {
+      "type": "string",
+      "enum": [
+        "Corporate",
+        "M&A",
+        "Securities Law",
+        "Banking & Finance",
+        "Taxation",
+        "Competition Law",
+        "IP",
+        "Arbitration",
+        "Litigation",
+        "Employment",
+        "Real Estate",
+        "Data Privacy",
+        "Regulatory",
+        "Other"
+      ]
+    },
+    "applicable_statutes": {
+      "type": "array",
+      "description": "Statutes and specific sections relevant to the question",
+      "items": {
+        "type": "object",
+        "required": ["statute", "relevance"],
+        "properties": {
+          "statute": {
+            "type": "string",
+            "examples": ["Companies Act, 2013"]
+          },
+          "section": {
+            "type": ["string", "null"],
+            "examples": ["s. 186"]
+          },
+          "relevance": {
+            "type": "string",
+            "description": "How this provision applies to the question"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "applicable_regulations": {
+      "type": "array",
+      "description": "SEBI/RBI/other regulations relevant to the question",
+      "items": {
+        "type": "object",
+        "required": ["regulation", "relevance"],
+        "properties": {
+          "regulation": {
+            "type": "string",
+            "examples": ["SEBI (LODR) Regulations, 2015"]
+          },
+          "provision": {
+            "type": ["string", "null"],
+            "examples": ["Regulation 33"]
+          },
+          "relevance": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "case_law": {
+      "type": "array",
+      "description": "Relevant case law with citations and principles",
+      "items": {
+        "type": "object",
+        "required": ["citation", "principle"],
+        "properties": {
+          "citation": {
+            "type": "string",
+            "description": "Full citation in Indian legal format",
+            "examples": ["M/s ABC v. XYZ, (2023) 5 SCC 234"]
+          },
+          "court": {
+            "type": "string",
+            "examples": ["Supreme Court of India", "Bombay High Court", "NCLAT"]
+          },
+          "year": { "type": ["integer", "null"] },
+          "principle": {
+            "type": "string",
+            "description": "Specific legal principle established or applied"
+          },
+          "relevance": {
+            "type": "string",
+            "description": "How this case applies to the research question"
+          },
+          "binding_or_persuasive": {
+            "type": "string",
+            "enum": ["Binding", "Persuasive", "Distinguishable"],
+            "description": "Precedential value relative to the matter's jurisdiction"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "analysis": {
+      "type": "string",
+      "description": "Detailed legal analysis applying law to the question. Must include all citations inline."
+    },
+    "conclusion": {
+      "type": "string",
+      "description": "Direct, concise answer to the research question"
+    },
+    "alternative_views": {
+      "type": ["string", "null"],
+      "description": "Counter-arguments, minority views, or alternative interpretations that a court might adopt"
+    },
+    "practical_recommendations": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Actionable recommendations for the matter (not legal advice — for advocate review)"
+    },
+    "open_issues": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Legal questions that remain unresolved or require further investigation"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Confidence in the legal analysis. Low confidence triggers HITL."
+    },
+    "hitl_required": { "type": "boolean", "default": false },
+    "hitl_reason": { "type": ["string", "null"] },
+    "disclaimer": {
+      "type": "string",
+      "default": "This memo is generated by AI and is for informational purposes only. It does not constitute legal advice. All citations must be independently verified by a qualified advocate before reliance."
+    }
+  },
+  "additionalProperties": false
+}

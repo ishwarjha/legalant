@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LegalAnt Negotiation Tracker",
+  "description": "Tracks negotiation positions and open points across redraft cycles for a specific document.",
+  "type": "object",
+  "required": ["negotiation_id", "matter_id", "document_name", "status"],
+  "properties": {
+    "negotiation_id": { "type": "string", "examples": ["NEG-LA-2024-001-01"] },
+    "matter_id": { "type": "string" },
+    "document_name": {
+      "type": "string",
+      "description": "Name of the document under negotiation"
+    },
+    "document_version": {
+      "type": "string",
+      "description": "Current version of the document being tracked",
+      "examples": ["v3", "Draft 3 (CP comments)"]
+    },
+    "our_client": { "type": "string" },
+    "counter_party": { "type": "string" },
+    "negotiation_start_date": { "type": "string", "format": "date" },
+    "target_signing_date": { "type": ["string", "null"], "format": "date" },
+    "status": {
+      "type": "string",
+      "enum": ["In Progress", "Final Agreed", "Terminated", "Signed"]
+    },
+    "redraft_cycles": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of redraft cycles completed"
+    },
+    "clauses": {
+      "type": "array",
+      "description": "Clause-by-clause negotiation status",
+      "items": {
+        "type": "object",
+        "required": ["clause_id", "clause_title", "status"],
+        "properties": {
+          "clause_id": { "type": "string" },
+          "clause_title": { "type": "string" },
+          "clause_number": {
+            "type": ["string", "null"],
+            "description": "Clause number in the document (e.g., '12.3')"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Open",
+              "Agreed",
+              "Escalated",
+              "Dropped",
+              "Pending Client Instruction"
+            ]
+          },
+          "our_position": {
+            "type": ["string", "null"],
+            "description": "Our client's current position on this clause"
+          },
+          "counter_party_position": {
+            "type": ["string", "null"],
+            "description": "Counter-party's current position"
+          },
+          "agreed_text": {
+            "type": ["string", "null"],
+            "description": "Final agreed text (populated when status = Agreed)"
+          },
+          "commercial_impact": {
+            "type": "string",
+            "enum": ["Critical", "High", "Medium", "Low"]
+          },
+          "notes": { "type": ["string", "null"] },
+          "history": {
+            "type": "array",
+            "description": "Track changes across redraft cycles",
+            "items": {
+              "type": "object",
+              "required": ["cycle", "date", "proposed_by", "text"],
+              "properties": {
+                "cycle": { "type": "integer", "minimum": 1 },
+                "date": { "type": "string", "format": "date" },
+                "proposed_by": {
+                  "type": "string",
+                  "description": "Party who proposed this version"
+                },
+                "text": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "open_points_count": {
+      "type": "integer",
+      "description": "Computed: number of clauses with status = Open or Escalated"
+    },
+    "critical_open_points": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of clause titles that are both Critical impact and Open"
+    },
+    "hitl_required": { "type": "boolean", "default": false },
+    "hitl_reason": { "type": ["string", "null"] },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "AI-generated negotiation status summary"
+    },
+    "generated_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" },
+    "last_updated": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

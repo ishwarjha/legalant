@@ -1,0 +1,25 @@
+{
+  "entities": [
+    {
+      "company_name": "",
+      "cin": "",
+      "status": "",
+      "incorporation_date": "",
+      "roc": "",
+      "due_diligence": {
+        "incorporation": "",
+        "capital_structure": "",
+        "directors": "",
+        "shareholding": "",
+        "charges": "",
+        "annual_compliance": "",
+        "auditor": "",
+        "business_commencement": "",
+        "regulatory_actions": "",
+        "red_flags": ""
+      },
+      "overall_rag": "",
+      "retrieved_at": ""
+    }
+  ]
+}

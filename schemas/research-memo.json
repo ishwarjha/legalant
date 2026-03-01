@@ -1,0 +1,21 @@
+{
+  "matter_id": "",
+  "query": "",
+  "issues": [
+    {
+      "issue": "",
+      "current_position": "",
+      "authorities": [
+        {
+          "case_name": "",
+          "citation": "",
+          "proposition": "",
+          "status": ""
+        }
+      ],
+      "regulatory_refs": []
+    }
+  ],
+  "open_questions": [],
+  "phase1_limitations": []
+}

@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCA Search Results",
+  "description": "Ministry of Corporate Affairs company/LLP search results. Populated by the MCA Lookup agent.",
+  "type": "object",
+  "required": ["search_id", "matter_id", "searched_entity", "search_date"],
+  "properties": {
+    "search_id": { "type": "string", "examples": ["MCA-LA-2024-001-01"] },
+    "matter_id": { "type": "string" },
+    "searched_entity": {
+      "type": "string",
+      "description": "The entity name or CIN that was searched"
+    },
+    "search_date": { "type": "string", "format": "date-time" },
+    "entity_type": {
+      "type": "string",
+      "enum": ["Company", "LLP", "OPC", "Section 8 Company", "Producer Company", "Unknown"]
+    },
+    "cin": {
+      "type": ["string", "null"],
+      "description": "Corporate Identification Number (21-character alphanumeric)"
+    },
+    "llpin": {
+      "type": ["string", "null"],
+      "description": "LLP Identification Number"
+    },
+    "registered_name": { "type": ["string", "null"] },
+    "incorporation_date": { "type": ["string", "null"], "format": "date" },
+    "registered_state": { "type": ["string", "null"] },
+    "registered_address": { "type": ["string", "null"] },
+    "roc": {
+      "type": ["string", "null"],
+      "description": "Registrar of Companies office (e.g., RoC-Delhi)"
+    },
+    "company_status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Strike Off",
+        "Under Liquidation",
+        "Amalgamated",
+        "Dissolved",
+        "Dormant",
+        "Converted",
+        "Unknown"
+      ]
+    },
+    "company_category": {
+      "type": ["string", "null"],
+      "description": "e.g., Company Limited by Shares, Unlimited Company"
+    },
+    "company_subcategory": {
+      "type": ["string", "null"],
+      "description": "e.g., Indian Non-Government Company"
+    },
+    "authorised_capital": {
+      "type": ["number", "null"],
+      "description": "Authorised share capital in INR"
+    },
+    "paid_up_capital": {
+      "type": ["number", "null"],
+      "description": "Paid-up share capital in INR"
+    },
+    "directors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "din": {
+            "type": "string",
+            "description": "Director Identification Number (8-digit)"
+          },
+          "name": { "type": "string" },
+          "designation": {
+            "type": "string",
+            "examples": ["Managing Director", "Director", "Whole-time Director", "Independent Director"]
+          },
+          "appointment_date": { "type": ["string", "null"], "format": "date" },
+          "cessation_date": { "type": ["string", "null"], "format": "date" },
+          "is_active": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "charges": {
+      "type": "array",
+      "description": "Charges registered against the company (mortgages, hypothecations, etc.)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "charge_id": { "type": "string" },
+          "charge_holder": { "type": "string" },
+          "amount": { "type": ["number", "null"], "description": "Charge amount in INR" },
+          "date_of_creation": { "type": ["string", "null"], "format": "date" },
+          "date_of_modification": { "type": ["string", "null"], "format": "date" },
+          "date_of_satisfaction": { "type": ["string", "null"], "format": "date" },
+          "status": {
+            "type": "string",
+            "enum": ["Open", "Satisfied", "Modified"]
+          },
+          "assets_charged": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "annual_returns_filed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "financial_year": { "type": "string", "examples": ["2023-24"] },
+          "form": { "type": "string", "examples": ["MGT-7", "AOC-4"] },
+          "filing_date": { "type": ["string", "null"], "format": "date" },
+          "status": { "type": "string", "enum": ["Filed", "Not Filed", "Late Filed"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "AI-identified concerns from MCA data (e.g., Strike off risk, pending charges, defaulting director)"
+    },
+    "data_source": {
+      "type": "string",
+      "default": "MCA21 Portal (mca.gov.in)"
+    },
+    "disclaimer": {
+      "type": "string",
+      "default": "Data sourced from MCA21 portal. Verify against official records before reliance."
+    },
+    "generated_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" }
+  },
+  "additionalProperties": false
+}

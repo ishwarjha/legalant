@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Matter Chronology",
+  "description": "Chronological timeline of events for a matter. Used in litigation, arbitration, and transaction support.",
+  "type": "object",
+  "required": ["matter_id", "events"],
+  "properties": {
+    "matter_id": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generated_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" },
+    "period_from": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Earliest date in the chronology"
+    },
+    "period_to": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Latest date in the chronology"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "date", "description"],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "Sequential event identifier",
+            "examples": ["EVT-001"]
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of the event (YYYY-MM-DD)"
+          },
+          "date_approximate": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true if exact date is uncertain; note the basis for approximation"
+          },
+          "time": {
+            "type": ["string", "null"],
+            "description": "Time of event if relevant (HH:MM IST)",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d IST$"
+          },
+          "description": {
+            "type": "string",
+            "description": "Clear, factual description of the event. No legal argument. Cite source."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Transaction",
+              "Correspondence",
+              "Filing",
+              "Court/Tribunal",
+              "Negotiation",
+              "Execution",
+              "Payment",
+              "Regulatory",
+              "Due Diligence",
+              "Internal",
+              "Other"
+            ]
+          },
+          "parties_involved": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "source_document_id": {
+            "type": ["string", "null"],
+            "description": "Reference to document_id in index.json"
+          },
+          "source_document_name": { "type": ["string", "null"] },
+          "legal_significance": {
+            "type": ["string", "null"],
+            "description": "Why this event matters legally (e.g., triggers limitation period)"
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["Critical", "High", "Medium", "Low"]
+          },
+          "is_disputed": {
+            "type": "boolean",
+            "default": false,
+            "description": "True if the occurrence or date of this event is disputed"
+          },
+          "dispute_note": {
+            "type": ["string", "null"],
+            "description": "Explain the dispute and each party's position"
+          },
+          "linked_events": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "event_ids of causally or logically related events"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "total_events": {
+      "type": "integer",
+      "description": "Total number of events in the chronology"
+    },
+    "key_dates_summary": {
+      "type": "array",
+      "description": "Curated list of most important dates for quick reference",
+      "items": {
+        "type": "object",
+        "required": ["date", "significance"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "significance": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

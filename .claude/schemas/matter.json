@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LegalAnt Matter",
+  "description": "Core matter/case file schema. One file per matter under /matters/<matter-id>/.",
+  "type": "object",
+  "required": ["matter_id", "client_name", "matter_type", "status", "created_at"],
+  "properties": {
+    "matter_id": {
+      "type": "string",
+      "description": "Unique matter identifier",
+      "pattern": "^LA-\\d{4}-\\d{3,6}$",
+      "examples": ["LA-2024-001"]
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Full legal name of the client entity or individual"
+    },
+    "client_code": {
+      "type": "string",
+      "description": "Internal client code for use in logs"
+    },
+    "matter_type": {
+      "type": "string",
+      "enum": [
+        "M&A",
+        "PE/VC",
+        "Contract Review",
+        "Contract Drafting",
+        "Due Diligence",
+        "Litigation Support",
+        "Arbitration",
+        "Regulatory Compliance",
+        "Corporate Secretarial",
+        "IP",
+        "Employment",
+        "Real Estate",
+        "Banking & Finance",
+        "Restructuring",
+        "Competition Law",
+        "Data Privacy",
+        "Other"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Active", "On Hold", "Closed", "Archived"]
+    },
+    "governing_law": {
+      "type": "string",
+      "description": "Primary governing law jurisdiction",
+      "default": "India"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "Relevant court/tribunal jurisdiction",
+      "examples": ["Delhi High Court", "NCLT Mumbai", "Supreme Court of India"]
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "properties": {
+          "name": { "type": "string" },
+          "role": {
+            "type": "string",
+            "enum": ["Client", "Counter-party", "Third Party", "Regulator", "Court", "Arbitrator"]
+          },
+          "entity_type": {
+            "type": "string",
+            "enum": ["Company", "LLP", "Partnership", "Individual", "Trust", "Government Body", "Other"]
+          },
+          "cin": {
+            "type": "string",
+            "description": "Corporate Identification Number (MCA)"
+          },
+          "gstin": { "type": "string" },
+          "pan": {
+            "type": "string",
+            "description": "Store masked: XXXXX1234X"
+          },
+          "registered_address": { "type": "string" },
+          "contact_name": { "type": "string" },
+          "contact_email": { "type": "string", "format": "email" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assigned_agents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "LegalAnt agent names assigned to this matter"
+    },
+    "responsible_advocate": {
+      "type": "string",
+      "description": "Human advocate responsible for matter oversight"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deadline": {
+      "type": "string",
+      "format": "date",
+      "description": "Primary matter deadline (e.g., court filing date, signing date)"
+    },
+    "fee_arrangement": {
+      "type": "string",
+      "enum": ["Fixed Fee", "Hourly", "Retainer", "Contingency", "Success Fee", "Pro Bono"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" },
+    "generated_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" }
+  },
+  "additionalProperties": false
+}

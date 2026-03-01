@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Due Diligence Register",
+  "description": "Comprehensive due diligence tracker for M&A and investment transactions. Maintained by the DD Analyst agent.",
+  "type": "object",
+  "required": ["register_id", "matter_id", "target_entity", "transaction_type", "status"],
+  "properties": {
+    "register_id": { "type": "string", "examples": ["DD-LA-2024-001"] },
+    "matter_id": { "type": "string" },
+    "target_entity": { "type": "string" },
+    "transaction_type": {
+      "type": "string",
+      "enum": [
+        "Share Acquisition",
+        "Asset Acquisition",
+        "Merger",
+        "Demerger",
+        "Investment (PE/VC)",
+        "Joint Venture",
+        "Other"
+      ]
+    },
+    "dd_start_date": { "type": "string", "format": "date" },
+    "dd_target_completion": { "type": ["string", "null"], "format": "date" },
+    "lead_agent": { "type": "string" },
+    "responsible_advocate": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["Not Started", "In Progress", "Under Review", "Completed", "Terminated"]
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category_id", "category_name", "items"],
+        "properties": {
+          "category_id": { "type": "string" },
+          "category_name": {
+            "type": "string",
+            "enum": [
+              "Corporate",
+              "Constitutional Documents",
+              "Board & Shareholders",
+              "Contracts & Agreements",
+              "Intellectual Property",
+              "Employment",
+              "Real Estate & Property",
+              "Litigation & Disputes",
+              "Regulatory & Compliance",
+              "Taxation",
+              "Environmental",
+              "Data Privacy",
+              "Financial",
+              "Insurance",
+              "Other"
+            ]
+          },
+          "completion_percentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["item_id", "description", "status"],
+              "properties": {
+                "item_id": { "type": "string" },
+                "description": {
+                  "type": "string",
+                  "description": "Specific DD item (e.g., 'Review all material contracts exceeding ₹1 crore')"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "Pending",
+                    "Received",
+                    "Under Review",
+                    "Cleared",
+                    "Red Flag",
+                    "Not Available",
+                    "Waived"
+                  ]
+                },
+                "risk_level": {
+                  "type": ["string", "null"],
+                  "enum": ["Critical", "High", "Medium", "Low", "None", null]
+                },
+                "document_ids": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "References to document_ids in index.json"
+                },
+                "findings": {
+                  "type": ["string", "null"],
+                  "description": "What the agent found upon review"
+                },
+                "recommendation": {
+                  "type": ["string", "null"],
+                  "description": "Recommended action (e.g., 'Seek indemnity', 'Include in SPA warranty', 'Obtain consent')"
+                },
+                "requires_warranty": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Should this be addressed via a SPA warranty?"
+                },
+                "requires_indemnity": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Should this be addressed via a specific indemnity?"
+                },
+                "deal_breaker": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "True if this issue could prevent deal completion — triggers mandatory HITL"
+                },
+                "notes": { "type": ["string", "null"] }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "description": "Consolidated red flags identified across all DD categories",
+      "items": {
+        "type": "object",
+        "required": ["flag_id", "description", "severity"],
+        "properties": {
+          "flag_id": { "type": "string" },
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["Critical", "High", "Medium", "Low"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Open", "Resolved", "Accepted by Client", "Escalated"]
+          },
+          "resolution": { "type": ["string", "null"] },
+          "deal_breaker": { "type": "boolean", "default": false }
+        },
+        "additionalProperties": false
+      }
+    },
+    "overall_risk_assessment": {
+      "type": ["string", "null"],
+      "enum": ["Low", "Medium", "High", "Very High", null]
+    },
+    "executive_summary": {
+      "type": ["string", "null"],
+      "description": "AI-generated summary for deal team / client presentation"
+    },
+    "generated_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" },
+    "last_updated": { "type": "string", "format": "date-time" },
+    "disclaimer": {
+      "type": "string",
+      "default": "This DD register is AI-generated. All findings require verification and review by a qualified advocate before reliance. This does not constitute legal advice."
+    }
+  },
+  "additionalProperties": false
+}

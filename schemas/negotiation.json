@@ -1,0 +1,29 @@
+{
+  "matter_id": "",
+  "current_draft_round": 0,
+  "documents_in_negotiation": [],
+  "positions": {
+    "[issue]": {
+      "our_position": "",
+      "counterparty_position": "",
+      "status": "",
+      "fallback": "",
+      "concession_cost": "",
+      "last_updated": ""
+    }
+  },
+  "deal_breakers": [],
+  "nice_to_haves": [],
+  "accepted_positions": {},
+  "rejected_positions": {},
+  "version_history": [
+    {
+      "round": 0,
+      "date": "",
+      "sent_by": "",
+      "file": ""
+    }
+  ],
+  "closing_checklist": [],
+  "last_updated": ""
+}

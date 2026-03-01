@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extraction Table",
+  "description": "Structured data extracted from legal documents by the OCR/Extraction agent.",
+  "type": "object",
+  "required": ["extraction_id", "matter_id", "document_id", "extraction_type"],
+  "properties": {
+    "extraction_id": {
+      "type": "string",
+      "examples": ["EXT-LA-2024-001-DOC001-01"]
+    },
+    "matter_id": { "type": "string" },
+    "document_id": {
+      "type": "string",
+      "description": "Reference to document_id in index.json"
+    },
+    "document_name": { "type": "string" },
+    "extraction_type": {
+      "type": "string",
+      "enum": [
+        "Contract Key Terms",
+        "Defined Terms",
+        "Obligations Table",
+        "Conditions Precedent",
+        "Representations & Warranties",
+        "Covenants",
+        "Events of Default",
+        "Payment Schedule",
+        "IP Rights",
+        "Expiry/Renewal Dates",
+        "Parties Table",
+        "Signatures",
+        "Custom"
+      ]
+    },
+    "extracted_at": { "type": "string", "format": "date-time" },
+    "generated_by_agent": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Overall confidence in the extraction quality"
+    },
+    "fields": {
+      "type": "array",
+      "description": "Key-value pairs extracted from the document",
+      "items": {
+        "type": "object",
+        "required": ["field_name", "extracted_value"],
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "description": "Name of the extracted field",
+            "examples": ["Governing Law", "Notice Period", "Effective Date", "Term"]
+          },
+          "extracted_value": {
+            "description": "The extracted value (string, number, date, boolean, or null)"
+          },
+          "source_page": {
+            "type": ["integer", "null"],
+            "minimum": 1,
+            "description": "Page number in original document"
+          },
+          "source_clause": {
+            "type": ["string", "null"],
+            "description": "Clause number or heading in original document"
+          },
+          "verbatim_text": {
+            "type": ["string", "null"],
+            "description": "Exact text from document supporting this extraction"
+          },
+          "needs_verification": {
+            "type": "boolean",
+            "default": false,
+            "description": "Flag for human verification of this specific field"
+          },
+          "notes": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "table_data": {
+      "type": "array",
+      "description": "For tabular extractions (e.g., payment schedules, obligation tables): array of row objects",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "total_fields_extracted": { "type": "integer", "minimum": 0 },
+    "fields_needing_verification": { "type": "integer", "minimum": 0 },
+    "extraction_notes": {
+      "type": ["string", "null"],
+      "description": "Any issues encountered during extraction (e.g., poor scan quality, handwritten text)"
+    },
+    "reviewed_by_human": { "type": "boolean", "default": false },
+    "review_timestamp": { "type": ["string", "null"], "format": "date-time" }
+  },
+  "additionalProperties": false
+}
