@@ -15,26 +15,26 @@ LegalAnt automates high-value repetitive legal work for Indian law practices —
 
 Each agent is a Claude Code subagent with a dedicated system prompt, a fixed set of tools, and a mandatory HITL output gate. Agents do not communicate directly with clients — all outputs are routed through the responsible advocate.
 
-| # | Agent | Role | Primary Output Schema |
-|---|-------|------|----------------------|
-| 1 | **Matter Intake** | Opens a new matter from a client brief; populates matter.json | `matter.json` |
-| 2 | **Document Indexer** | Classifies and indexes every uploaded document | `index.json` |
-| 3 | **OCR / Extractor** | Extracts text and structured data from PDFs (text-native + scanned) | `extraction-table.json` |
-| 4 | **Chronology Builder** | Constructs a timeline of events sourced from indexed documents | `chronology.json` |
-| 5 | **MCA Lookup** | Queries MCA21 for company/LLP registration, directors, charges, compliance | `mca-results.json` |
-| 6 | **RBI Researcher** | Fetches and summarises RBI circulars, master directions, FEMA notifications | `research-memo.json` |
-| 7 | **SEBI Researcher** | Fetches and summarises SEBI circulars, regulations, enforcement orders | `research-memo.json` |
-| 8 | **Legal Researcher** | Deep statutory and case-law research; produces structured memo with citations | `research-memo.json` |
-| 9 | **Contract Reviewer** | Applies CONTRACT checklist; produces issues table with severity ratings | `extraction-table.json` |
-| 10 | **Contract Drafter** | Drafts agreements from term sheets; applies word-choice and modal-verb rules | _(document output)_ |
-| 11 | **DD Analyst** | Runs legal due diligence; maintains red-flag register for M&A and investment matters | `dd-register.json` |
-| 12 | **Negotiation Tracker** | Tracks clause-by-clause positions, fallbacks, concession costs across redraft cycles | `negotiation.json` |
-| 13 | **Compliance Checker** | Maps contractual and corporate obligations to Indian regulatory requirements | `research-memo.json` |
-| 14 | **Litigation Support** | Organises pleadings, evidence summaries, hearing chronologies | `chronology.json` |
-| 15 | **Corporate Secretary** | Drafts board resolutions, statutory notices, annual filing checklists | _(document output)_ |
-| 16 | **Employment Analyst** | Reviews employment contracts, POSH policies, severance terms | `extraction-table.json` |
-| 17 | **IP Analyst** | Reviews IP assignments, licensing agreements, freedom-to-operate questions | `extraction-table.json` |
-| 18 | **Orchestrator** | Coordinates multi-agent workflows end-to-end; manages HITL log and matter lifecycle | `hitl-log.json` |
+| #   | Agent                   | Role                                                                                 | Primary Output Schema   |
+| --- | ----------------------- | ------------------------------------------------------------------------------------ | ----------------------- |
+| 1   | **Matter Intake**       | Opens a new matter from a client brief; populates matter.json                        | `matter.json`           |
+| 2   | **Document Indexer**    | Classifies and indexes every uploaded document                                       | `index.json`            |
+| 3   | **OCR / Extractor**     | Extracts text and structured data from PDFs (text-native + scanned)                  | `extraction-table.json` |
+| 4   | **Chronology Builder**  | Constructs a timeline of events sourced from indexed documents                       | `chronology.json`       |
+| 5   | **MCA Lookup**          | Queries MCA21 for company/LLP registration, directors, charges, compliance           | `mca-results.json`      |
+| 6   | **RBI Researcher**      | Fetches and summarises RBI circulars, master directions, FEMA notifications          | `research-memo.json`    |
+| 7   | **SEBI Researcher**     | Fetches and summarises SEBI circulars, regulations, enforcement orders               | `research-memo.json`    |
+| 8   | **Legal Researcher**    | Deep statutory and case-law research; produces structured memo with citations        | `research-memo.json`    |
+| 9   | **Contract Reviewer**   | Applies CONTRACT checklist; produces issues table with severity ratings              | `extraction-table.json` |
+| 10  | **Contract Drafter**    | Drafts agreements from term sheets; applies word-choice and modal-verb rules         | _(document output)_     |
+| 11  | **DD Analyst**          | Runs legal due diligence; maintains red-flag register for M&A and investment matters | `dd-register.json`      |
+| 12  | **Negotiation Tracker** | Tracks clause-by-clause positions, fallbacks, concession costs across redraft cycles | `negotiation.json`      |
+| 13  | **Compliance Checker**  | Maps contractual and corporate obligations to Indian regulatory requirements         | `research-memo.json`    |
+| 14  | **Litigation Support**  | Organises pleadings, evidence summaries, hearing chronologies                        | `chronology.json`       |
+| 15  | **Corporate Secretary** | Drafts board resolutions, statutory notices, annual filing checklists                | _(document output)_     |
+| 16  | **Employment Analyst**  | Reviews employment contracts, POSH policies, severance terms                         | `extraction-table.json` |
+| 17  | **IP Analyst**          | Reviews IP assignments, licensing agreements, freedom-to-operate questions           | `extraction-table.json` |
+| 18  | **Orchestrator**        | Coordinates multi-agent workflows end-to-end; manages HITL log and matter lifecycle  | `hitl-log.json`         |
 
 ---
 
@@ -86,22 +86,35 @@ legalant/
 
 ### Phase 1 — Active at Launch
 
-| Server | Folder | Tools | Data Source |
-|--------|--------|-------|-------------|
-| **rbi-scraper** | `mcp-servers/rbi-scraper/` | `search_rbi`, `fetch_rbi_document` | rbi.org.in (public) |
-| **sebi-scraper** | `mcp-servers/sebi-scraper/` | `search_sebi`, `search_scores`, `fetch_sebi_document` | sebi.gov.in, scores.sebi.gov.in (public) |
-| **pdf-ocr-processor** | `mcp-servers/pdf-ocr-processor/` | `detect_pdf_type`, `extract_text` | Local files via pdfjs-dist + tesseract.js |
+| Server                | Folder                           | Tools                                                 | Data Source                               |
+| --------------------- | -------------------------------- | ----------------------------------------------------- | ----------------------------------------- |
+| **rbi-scraper**       | `mcp-servers/rbi-scraper/`       | `search_rbi`, `fetch_rbi_document`                    | rbi.org.in (public)                       |
+| **sebi-scraper**      | `mcp-servers/sebi-scraper/`      | `search_sebi`, `search_scores`, `fetch_sebi_document` | sebi.gov.in, scores.sebi.gov.in (public)  |
+| **pdf-ocr-processor** | `mcp-servers/pdf-ocr-processor/` | `detect_pdf_type`, `extract_text`                     | Local files via pdfjs-dist + tesseract.js |
 
 ### Phase 2 — Added When Activated
 
-| Server | Trigger | Tools (planned) | Data Source |
-|--------|---------|-----------------|-------------|
-| **mca-api** | When Finanvo API key is provisioned | `search_company`, `get_directors`, `get_charges`, `get_filings` | Finanvo MCA API (authenticated) |
-| **kanoon-search** | When IndiaKanoon API token is provisioned | `search_cases`, `fetch_judgment` | IndiaKanoon API (authenticated) |
+| Server            | Trigger                                   | Tools (planned)                                                 | Data Source                     |
+| ----------------- | ----------------------------------------- | --------------------------------------------------------------- | ------------------------------- |
+| **mca-api**       | When Finanvo API key is provisioned       | `search_company`, `get_directors`, `get_charges`, `get_filings` | Finanvo MCA API (authenticated) |
+| **kanoon-search** | When IndiaKanoon API token is provisioned | `search_cases`, `fetch_judgment`                                | IndiaKanoon API (authenticated) |
 
 ---
 
 ## Setup Instructions
+
+## One-Line Install
+
+```bash
+# Install core rules only
+curl -fsSL https://raw.githubusercontent.com/ishwarjha/legalant/main/install-legalant.sh | bash
+
+# Install everything
+curl -fsSL https://raw.githubusercontent.com/ishwarjha/legalant/main/install-legalant.sh | bash -s -- all
+
+# Install specific practice areas
+curl -fsSL https://raw.githubusercontent.com/ishwarjha/legalant/main/install-legalant.sh | bash -s -- inhouse transactions
+```
 
 ### Prerequisites
 
@@ -170,16 +183,16 @@ cp schemas/hitl-log.json matters/LA-2024-001/hitl-log.json
 
 ## Phase 1 vs Phase 2 — Data Sources
 
-| Data Type | Phase 1 Source | Phase 2 Source | Notes |
-|-----------|---------------|----------------|-------|
-| RBI circulars & master directions | rbi-scraper (public scrape) | rbi-scraper (unchanged) | RBI has no authenticated API |
-| SEBI circulars & regulations | sebi-scraper (public scrape) | sebi-scraper (unchanged) | SEBI has no authenticated API |
-| SEBI enforcement / SCORES | sebi-scraper (public scrape) | sebi-scraper (unchanged) | |
-| PDF text extraction | pdf-ocr-processor (local, pdfjs-dist) | pdf-ocr-processor (unchanged) | |
-| MCA company data | Manual upload or public MCA21 portal | mca-api via Finanvo (authenticated) | Finanvo provides structured MCA data |
-| Case law & judgments | Manual upload of downloaded PDFs | kanoon-search via IndiaKanoon API | IndiaKanoon API required for search |
-| Google Workspace (Docs, Drive) | Google service account credentials | Google service account (unchanged) | GOOGLE_CREDENTIALS_PATH in .env |
-| n8n workflow triggers | N8N_WEBHOOK_URL in .env | N8N_WEBHOOK_URL (unchanged) | Used for notifications and automation |
+| Data Type                         | Phase 1 Source                        | Phase 2 Source                      | Notes                                 |
+| --------------------------------- | ------------------------------------- | ----------------------------------- | ------------------------------------- |
+| RBI circulars & master directions | rbi-scraper (public scrape)           | rbi-scraper (unchanged)             | RBI has no authenticated API          |
+| SEBI circulars & regulations      | sebi-scraper (public scrape)          | sebi-scraper (unchanged)            | SEBI has no authenticated API         |
+| SEBI enforcement / SCORES         | sebi-scraper (public scrape)          | sebi-scraper (unchanged)            |                                       |
+| PDF text extraction               | pdf-ocr-processor (local, pdfjs-dist) | pdf-ocr-processor (unchanged)       |                                       |
+| MCA company data                  | Manual upload or public MCA21 portal  | mca-api via Finanvo (authenticated) | Finanvo provides structured MCA data  |
+| Case law & judgments              | Manual upload of downloaded PDFs      | kanoon-search via IndiaKanoon API   | IndiaKanoon API required for search   |
+| Google Workspace (Docs, Drive)    | Google service account credentials    | Google service account (unchanged)  | GOOGLE_CREDENTIALS_PATH in .env       |
+| n8n workflow triggers             | N8N_WEBHOOK_URL in .env               | N8N_WEBHOOK_URL (unchanged)         | Used for notifications and automation |
 
 ---
 
