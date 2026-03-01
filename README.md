@@ -11,7 +11,7 @@ LegalAnt automates high-value repetitive legal work for Indian law practices —
 
 This project will be a helpful guide:
 
-- To build a single entry point agent via lexis. Most agent systems expose every agent to the user and wonder why adoption is poor. We thought one intake agent that routes internally is the fix.
+- To build a single entry point agent via lexis. Most agent systems expose every agent to the user. We thought one intake agent that routes internally is the fix.
 - The shared skills pattern solves the duplication problem that kills multi-agent systems at scale. When you have 18 agents and update a rule in one prompt, the other 17 are still running because skills are loaded at runtime to fix this.
 - The Human In The Loop (HITL) gates as first-class architecture. Considering the legal system complications, its absolute stops for irreversible actions as the most honest implementation of "human oversight" in AI systems.
 - The pattern table at the bottom is designed to be a quick-reference for every agent.
