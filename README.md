@@ -9,6 +9,13 @@
 
 LegalAnt automates high-value repetitive legal work for Indian law practices — contract review, due diligence, regulatory research, chronology building, negotiation tracking, and more — with a mandatory human-in-the-loop (HITL) gate that keeps the responsible advocate in control of every material decision.
 
+This project will be a helpful guide:
+
+- To build a single entry point agent via lexis. Most agent systems expose every agent to the user and wonder why adoption is poor. We thought one intake agent that routes internally is the fix.
+- The shared skills pattern solves the duplication problem that kills multi-agent systems at scale. When you have 18 agents and update a rule in one prompt, the other 17 are still running because skills are loaded at runtime to fix this.
+- The Human In The Loop (HITL) gates as first-class architecture. Considering the legal system complications, its absolute stops for irreversible actions as the most honest implementation of "human oversight" in AI systems.
+- The pattern table at the bottom is designed to be a quick-reference for every agent.
+
 ---
 
 ## 18-Agent Architecture
@@ -211,4 +218,4 @@ Every agent output passes through a mandatory gate before any action is taken:
 
 ## Disclaimer
 
-_LegalAnt assists qualified advocates. It does not provide legal advice and cannot substitute for professional legal judgment. Every agent output carries a mandatory disclaimer and must be reviewed by a qualified advocate before reliance or external communication._
+_LegalAnt assists qualified advocates and legal professionals. It does not provide legal advice and cannot substitute for professional legal judgment. Every agent output carries a mandatory disclaimer and must be reviewed by a qualified advocate before reliance or external communication._
