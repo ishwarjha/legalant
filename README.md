@@ -148,21 +148,21 @@ The curl installer doesn't run in native PowerShell. Use Git Bash, WSL, or the P
 
 ## Commands
 
-| Command | What it does |
-|---|---|
-| `/legalant:matter` | Start a new matter. `lexis` reads intake and routes to the right agent. |
-| `/legalant:review` | 4-layer CONTRACT review of an attached contract. |
-| `/legalant:research` | Legal research across indiankanoon.org, RBI, and SEBI. |
-| `/legalant:redline` | Single-file quality audit or two-file version comparison. |
-| `/legalant:translate` | Legal translation with structure preserved and Translator's Notes for tricky terms. |
-| `/legalant:mca` | MCA due diligence: guided portal lookup plus a 10-category analysis with RAG rating. |
-| `/legalant:chronology` | Build a matter timeline from uploaded documents. |
-| `/legalant:extract` | Bulk field extraction using a DD schema or your own. |
-| `/legalant:negotiate` | Start or resume a multi-round negotiation. State persists across sessions. |
-| `/legalant:advise` | Multi-regulator advisory across RBI, SEBI, MCA, FEMA, IRDAI, and the DPDP Act. |
-| `/legalant:dd` | Full due diligence with Red Flag Register and Change of Control Map. |
-| `/legalant:inhouse` | In-house review with two outputs: full legal analysis and a plain-language brief. |
-| `/legalant:index` | Index documents into the matter library. |
+| Command                | What it does                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------ |
+| `/legalant:matter`     | Start a new matter. `lexis` reads intake and routes to the right agent.              |
+| `/legalant:review`     | 4-layer CONTRACT review of an attached contract.                                     |
+| `/legalant:research`   | Legal research across indiankanoon.org, RBI, and SEBI.                               |
+| `/legalant:redline`    | Single-file quality audit or two-file version comparison.                            |
+| `/legalant:translate`  | Legal translation with structure preserved and Translator's Notes for tricky terms.  |
+| `/legalant:mca`        | MCA due diligence: guided portal lookup plus a 10-category analysis with RAG rating. |
+| `/legalant:chronology` | Build a matter timeline from uploaded documents.                                     |
+| `/legalant:extract`    | Bulk field extraction using a DD schema or your own.                                 |
+| `/legalant:negotiate`  | Start or resume a multi-round negotiation. State persists across sessions.           |
+| `/legalant:advise`     | Multi-regulator advisory across RBI, SEBI, MCA, FEMA, IRDAI, and the DPDP Act.       |
+| `/legalant:dd`         | Full due diligence with Red Flag Register and Change of Control Map.                 |
+| `/legalant:inhouse`    | In-house review with two outputs: full legal analysis and a plain-language brief.    |
+| `/legalant:index`      | Index documents into the matter library.                                             |
 
 ---
 
@@ -266,10 +266,6 @@ Two paid integrations slot in when you're ready. The Indian Kanoon API adds stru
 
 ---
 
-## Build Guide
+## Disclaimer
 
-To build LegalAnt from scratch instead of installing the plugin, read `legalant-build-execution-guide.md`. It covers all 18 modules with exact prompts, tests, and passing criteria.
-
----
-
-LegalAnt is a legal assistance tool, not a law firm. Nothing it produces is legal advice.
+_LegalAnt assists qualified advocates and legal professionals. It does not provide legal advice and cannot substitute for professional legal judgment. Every agent output carries a mandatory disclaimer and must be reviewed by a qualified advocate before reliance or external communication._
