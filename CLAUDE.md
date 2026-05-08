@@ -20,9 +20,10 @@ legalant/                          ← repo root
     skills/{contract-basics,word-choice,universal-standards,indian-law-defaults}/SKILL.md
   .claude-plugin/marketplace.json  ← marketplace manifest (separate from the plugin's own manifest)
   .claude/agents/                  ← duplicates of legalant/agents/ — installed copy for local dev
+    mcp-servers/{pdf-ocr-processor,rbi-scraper,sebi-scraper}/  ← Node MCP servers, declared in plugin.json
   rules/                           ← extra .md skills that the plugin can't auto-distribute (installed via install.sh)
   schemas/                         ← JSON shapes for matter.json, hitl-log.json, dd-register.json, etc.
-  mcp-servers/                     ← three Node MCP servers (pdf-ocr, rbi-scraper, sebi-scraper)
+  scripts/office/validate.py       ← post-render DOCX validator (every agent calls this)
   matters/                         ← .gitignored runtime workspace; one folder per LA-YYYY-NNN matter
 ```
 
@@ -45,7 +46,7 @@ python scripts/office/validate.py <path-to.docx>
 
 There is **no `npm test`, no lint, no CI**. The only "test" is a manual end-to-end matter run (see `matters/LA-2026-FINAL` or `LA-2026-TEST` for shape).
 
-`scripts/office/validate.py` is referenced by every DOCX-generating agent but **is not present in this repo** — it is expected at runtime in the user's environment. Treat as an external dependency; do not try to add it unless asked.
+`scripts/office/validate.py` is the post-render DOCX validator that every agent calls after rendering. It checks ZIP integrity, well-formedness of every `.xml` and `.rels` part, presence of required parts (`[Content_Types].xml`, `word/document.xml`), and the `tblGrid` ↔ `tcW` cell-span invariant that catches the most common docx-v9 generator bug. Pure stdlib, no install needed.
 
 ## High-Level Architecture
 
@@ -110,7 +111,7 @@ FILL_RED='F4CCCC'  FILL_AMBER='FCE5CD'  FILL_GREEN='D9EAD3'
 - Every `Table` constructor must receive `columnWidths: […]` whose sum equals **exactly** 9026.
 - Never put `\n` inside a `TextRun` — use separate `Paragraph` elements.
 - For numbered lists, prepend `"1.  "` as a `TextRun`; do not use `docx`'s numbering system (buggy in v9).
-- CONTRIBUTING.md says "never use HeadingLevel — use plain Paragraph with explicit border.bottom"; `lexis.md` itself imports and uses HeadingLevel. Treat the CONTRIBUTING rule as the intent for **new** agents and tables; mirror existing patterns when extending old ones.
+- Headings: use `HeadingLevel` for outline/navigation **plus** explicit `border.bottom` and explicit run-level `font`/`size`/`color` for visual styling. Never rely on Word's default heading look.
 
 ### HTML viewer design constants
 
@@ -142,7 +143,7 @@ Modal verb shifts (SHALL ↔ WILL ↔ WOULD ↔ MAY ↔ COULD ↔ MUST) are **au
 
 ## .env / Integrations
 
-- Phase 1 (default): `GOOGLE_CREDENTIALS_PATH`, `N8N_WEBHOOK_URL`. Everything works without paid APIs — case law via indiankanoon.org search, MCA via HITL portal walkthrough, RBI/SEBI via the `mcp-servers/` scrapers.
+- Phase 1 (default): `GOOGLE_CREDENTIALS_PATH`, `N8N_WEBHOOK_URL`. Everything works without paid APIs — case law via indiankanoon.org search, MCA via HITL portal walkthrough, RBI/SEBI via the bundled MCP scrapers in `legalant/mcp-servers/` (auto-registered via `plugin.json` `mcpServers`; `install.sh` runs `npm install` in each).
 - Phase 2A: `KANOON_API_TOKEN` (Indian Kanoon paid API).
 - Phase 2B: `FINANVO_ACCESS_KEY`, `FINANVO_ACCESS_SECRET` (MCA V3 automation).
 

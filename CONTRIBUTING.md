@@ -114,7 +114,7 @@ Critical rules:
 - `color: 'auto'` on every shading element. NEVER set color to the fill hex.
 - `columnWidths: [w1, w2, ...]` MUST be passed to every `Table` constructor. Sum MUST equal `CONTENT_W`.
 - NEVER `\n` inside `TextRun` — use separate `Paragraph` elements.
-- NEVER use `HeadingLevel` — use plain `Paragraph` with explicit `border.bottom`.
+- Headings: use `HeadingLevel` (Heading1/Heading2/Heading3) so the document gets a proper outline for navigation. Combine with explicit `border.bottom` and explicit `font`/`size`/`color` on the run for visual styling — never rely on Word's default heading look.
 - Numbered lists: prepend `"1.  "` as `TextRun`, not the numbering system (buggy in docx v9).
 
 ---

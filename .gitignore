@@ -1,7 +1,10 @@
-# Node (DOCX generator)
+# Node — runtime DOCX generator artifacts (per-matter, throwaway)
 node_modules/
 package-lock.json
 package.json
+
+# Exception: plugin MCP server source ships with the plugin
+!legalant/mcp-servers/**/package.json
 
 # Output artifacts — track only .html, never raw .docx in repo
 matters/

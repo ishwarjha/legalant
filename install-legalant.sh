@@ -124,6 +124,23 @@ download "legalant/skills/word-choice/SKILL.md"           "$PLUGIN_DIR/legalant/
 download "legalant/skills/universal-standards/SKILL.md"   "$PLUGIN_DIR/legalant/skills/universal-standards/SKILL.md"
 download "legalant/skills/indian-law-defaults/SKILL.md"   "$PLUGIN_DIR/legalant/skills/indian-law-defaults/SKILL.md"
 
+# ── MCP servers ─────────────────────────────────────────────────────────────
+echo ""
+info "Installing MCP servers..."
+for srv in pdf-ocr-processor rbi-scraper sebi-scraper; do
+  download "legalant/mcp-servers/$srv/index.js"     "$PLUGIN_DIR/legalant/mcp-servers/$srv/index.js"
+  download "legalant/mcp-servers/$srv/package.json" "$PLUGIN_DIR/legalant/mcp-servers/$srv/package.json"
+done
+if command -v npm >/dev/null 2>&1; then
+  for srv in pdf-ocr-processor rbi-scraper sebi-scraper; do
+    info "  Installing deps for mcp-servers/$srv..."
+    ( cd "$PLUGIN_DIR/legalant/mcp-servers/$srv" && npm install --silent --no-fund --no-audit ) \
+      || warn "    npm install failed for $srv — run it manually before using MCP tools"
+  done
+else
+  warn "  npm not found — skip MCP dep install. Install Node 18+ and run 'npm install' in each mcp-servers/<name>/"
+fi
+
 # ── install rules by practice area ───────────────────────────────────────────
 install_rules() {
   local area="$1"

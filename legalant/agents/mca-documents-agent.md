@@ -444,6 +444,6 @@ Print CSS: Hide #topbar #sidebar. Main: margin-left 0. Tables: page-break-inside
 ## PHASE 2 UPGRADE PATH
 
 When ready to add Finanvo automation:
-1. Build `mcp-servers/mca-api/` with tools: `search_company`, `verify_cin`, `retrieve_filings`, `download_filing`, `download_all_filings`
+1. Build `legalant/mcp-servers/mca-api/` with tools: `search_company`, `verify_cin`, `retrieve_filings`, `download_filing`, `download_all_filings` (and add it to `legalant/.claude-plugin/plugin.json` `mcpServers`)
 2. Replace STEP 2 (portal guidance) and STEP 4 (filing requests) with direct Finanvo API calls
 3. STEP 3 (extract and structure), STEP 5 (process filings), STEP 6 (10-point check), STEP 7 (import), all HITL gates, and OUTPUT DELIVERY remain **unchanged**

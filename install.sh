@@ -101,7 +101,33 @@ else
 fi
 echo ""
 
-# ── 4. Rules (optional) ─────────────────────────────────────────────────────
+# ── 4. MCP servers ──────────────────────────────────────────────────────────
+MCP_SRC="$PLUGIN_DIR/mcp-servers"
+MCP_DST="$CLAUDE_DIR/mcp-servers"
+
+if [[ -d "$MCP_SRC" ]]; then
+  mkdir -p "$MCP_DST"
+  if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+    warn "  Node/npm not found — skipping MCP server install. Install Node 18+ and rerun."
+  else
+    mcp_count=0
+    for srv_dir in "$MCP_SRC"/*/; do
+      [[ -d "$srv_dir" ]] || continue
+      srv_name=$(basename "$srv_dir")
+      dst="$MCP_DST/$srv_name"
+      mkdir -p "$dst"
+      cp "$srv_dir/index.js"     "$dst/index.js"     2>/dev/null || true
+      cp "$srv_dir/package.json" "$dst/package.json" 2>/dev/null || true
+      info "  ✓ mcp-servers/$srv_name (installing deps…)"
+      ( cd "$dst" && npm install --silent --no-fund --no-audit ) || warn "    npm install failed for $srv_name — install manually"
+      ((mcp_count++))
+    done
+    info "  MCP servers: $mcp_count installed"
+  fi
+fi
+echo ""
+
+# ── 5. Rules (optional) ─────────────────────────────────────────────────────
 RULES_SRC="$SCRIPT_DIR/rules"
 RULES_DST="$CLAUDE_DIR/rules"
 

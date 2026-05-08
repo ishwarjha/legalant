@@ -1,0 +1,21 @@
+{
+  "name": "legalant-rbi-scraper",
+  "version": "1.0.0",
+  "description": "LegalAnt MCP server — search RBI circulars, master directions, FEMA notifications and extract PDF content",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.7.0",
+    "cheerio": "^1.0.0",
+    "pdf-parse": "^1.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED"
+}

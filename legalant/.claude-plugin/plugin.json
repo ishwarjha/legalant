@@ -10,5 +10,22 @@
   "homepage": "https://github.com/ishwarjha/legalant",
   "repository": "https://github.com/ishwarjha/legalant",
   "license": "MIT",
-  "keywords": ["legal", "india", "contract", "due-diligence", "research", "mca", "rbi", "sebi"]
+  "keywords": ["legal", "india", "contract", "due-diligence", "research", "mca", "rbi", "sebi"],
+  "mcpServers": {
+    "legalant-pdf-ocr": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/pdf-ocr-processor/index.js"],
+      "description": "Extract text from PDFs (native text layer via pdfjs-dist; OCR fallback via tesseract.js for scanned documents)"
+    },
+    "legalant-rbi-scraper": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/rbi-scraper/index.js"],
+      "description": "Search RBI circulars, master directions, and FEMA notifications; extract PDF content"
+    },
+    "legalant-sebi-scraper": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/sebi-scraper/index.js"],
+      "description": "Search SEBI circulars, regulations, enforcement orders, and SCORES data"
+    }
+  }
 }
