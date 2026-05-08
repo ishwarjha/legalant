@@ -41,7 +41,7 @@ if [[ -d "$AGENTS_SRC" ]]; then
     else
       cp "$f" "$AGENTS_DST/$name"
       info "  ✓ agents/$name"
-      ((agent_count++))
+      ((++agent_count))
     fi
   done
   info "  Agents: $agent_count installed"
@@ -65,7 +65,7 @@ if [[ -d "$COMMANDS_SRC" ]]; then
     else
       cp "$f" "$COMMANDS_DST/$name"
       info "  ✓ commands/$name"
-      ((cmd_count++))
+      ((++cmd_count))
     fi
   done
   info "  Commands: $cmd_count installed"
@@ -92,7 +92,7 @@ if [[ -d "$SKILLS_SRC" ]]; then
     else
       cp "$skill_file" "$dst_file"
       info "  ✓ skills/$skill_name"
-      ((skill_count++))
+      ((++skill_count))
     fi
   done
   info "  Skills: $skill_count installed"
@@ -120,7 +120,7 @@ if [[ -d "$MCP_SRC" ]]; then
       cp "$srv_dir/package.json" "$dst/package.json" 2>/dev/null || true
       info "  ✓ mcp-servers/$srv_name (installing deps…)"
       ( cd "$dst" && npm install --silent --no-fund --no-audit ) || warn "    npm install failed for $srv_name — install manually"
-      ((mcp_count++))
+      ((++mcp_count))
     done
     info "  MCP servers: $mcp_count installed"
   fi
@@ -139,7 +139,7 @@ if [[ -d "$RULES_SRC" ]] && compgen -G "$RULES_SRC/*.md" > /dev/null 2>&1; then
     name=$(basename "$f")
     cp "$f" "$RULES_DST/$name"
     info "  ✓ rules/$name"
-    ((rule_count++))
+    ((++rule_count))
   done
   info "  Rules: $rule_count installed"
 fi
