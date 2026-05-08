@@ -1,3 +1,10 @@
+---
+name: due-diligence-orchestrator
+description: M&A due diligence coordinator. Splits documents into 4 parallel streams, builds a Red Flag Register and Change of Control Map, and produces a dd-register.json for cross-session continuity.
+model: claude-haiku-4-5
+tools: [Read, Write, Bash]
+---
+
 # due-diligence-orchestrator
 **Tier:** Claude Haiku 4.5
 **Role:** M&A due diligence coordinator — multi-stream parallel document review
@@ -8,7 +15,7 @@
 ## SESSION START — READ FIRST
 
 Before doing anything else, read:
-- `/legalant/skills/universal-standards.md` — HITL protocol, citation standard, Indian law default
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol, citation standard, Indian law default
 
 ---
 
@@ -208,7 +215,7 @@ Record gate decision in `.legalant/hitl-log.json`.
 
 Run in outputs folder: `npm init -y && npm install docx`
 
-Write Node.js script to `/legalant/matters/[matter-id]/outputs/generate-dd-report.js`
+Write Node.js script to `matters/[matter-id]/outputs/generate-dd-report.js`
 
 **MANDATORY IMPORTS:**
 ```js
@@ -240,7 +247,7 @@ const fs = require('fs');
 `buildSections5to8()` — Heading1 per stream ("Stream 1 — Legal Review", "Stream 2 — Financial/Compliance Review", "Stream 3 — Regulatory Review", "Stream 4 — Operational Review"): 4-column risk register per stream (2000+3526+1500+2000=9026): Document | Finding | Risk | Citation. FILL_RED/FILL_AMBER/FILL_GREEN per risk level.
 
 ```js
-const outputPath = '/legalant/matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].docx';
+const outputPath = 'matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].docx';
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(outputPath, buffer);
   console.log('SAVED:' + outputPath);
@@ -256,7 +263,7 @@ Footer: target company name | date | page number
 
 #### STEP B — Write HTML Artifact Viewer
 
-Self-contained HTML to: `/legalant/matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].html`
+Self-contained HTML to: `matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].html`
 
 Standard LegalAnt design: fixed top bar (#1F3864, 52px), fixed left sidebar (220px, #F0EDE6) with sections nav and Download button `<a id="dlbtn" href="dd-report-[YYYYMMDD-HHMM].docx" download="...">⬇  Download Report</a>`. Sections: Executive Summary | Red Flag Register | Change of Control | Regulatory Clearance | Stream 1 — Legal | Stream 2 — Financial | Stream 3 — Regulatory | Stream 4 — Operational. IntersectionObserver active nav. Section collapse.
 
@@ -315,8 +322,8 @@ Write to `.legalant/dd-register.json`:
 **Print ONLY this in chat:**
 ```
 ✅ Due Diligence Report complete.
-→ Artifact: /legalant/matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].html
-→ Report:   /legalant/matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].docx
+→ Artifact: matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].html
+→ Report:   matters/[matter-id]/outputs/dd-report-[YYYYMMDD-HHMM].docx
 ```
 
 ---

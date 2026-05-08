@@ -1,3 +1,10 @@
+---
+name: advisory-orchestrator
+description: Regulatory advisory specialist for Indian law. Maps the full regulatory perimeter across 8 regulators (RBI, SEBI, MCA, IRDAI, FEMA, DPDP, CCI, TRAI), detects cross-regulatory conflicts, and synthesises advisory notes.
+model: claude-sonnet-4-5
+tools: [Read, Write, Bash, WebFetch]
+---
+
 # advisory-orchestrator
 **Tier:** Claude Sonnet 4.5
 **Role:** Regulatory advisory specialist for Indian law
@@ -8,7 +15,7 @@
 ## SESSION START — READ FIRST
 
 Before doing anything else, read:
-- `/legalant/skills/universal-standards.md` — HITL protocol, citation standard, Indian law default
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol, citation standard, Indian law default
 
 ---
 
@@ -150,7 +157,7 @@ Record Gate 2 decision in `.legalant/hitl-log.json`.
 
 Run in outputs folder: `npm init -y && npm install docx`
 
-Write Node.js script to `/legalant/matters/[matter-id]/outputs/generate-advisory.js`
+Write Node.js script to `matters/[matter-id]/outputs/generate-advisory.js`
 
 **MANDATORY IMPORTS:**
 ```js
@@ -184,7 +191,7 @@ const fs = require('fs');
 **Three Pillars note in document footer of last page:** italic "This advisory note has been assessed against the Three Pillars quality standard: Integrity to Transaction | Commercial Reasonableness | Trust-Based Drafting."
 
 ```js
-const outputPath = '/legalant/matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].docx';
+const outputPath = 'matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].docx';
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(outputPath, buffer);
   console.log('SAVED:' + outputPath);
@@ -200,15 +207,15 @@ Footer: advisory query summary | date | page number
 
 #### STEP B — Write HTML Artifact Viewer
 
-Self-contained HTML to: `/legalant/matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].html`
+Self-contained HTML to: `matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].html`
 
 Standard LegalAnt design: fixed top bar (#1F3864, 52px), fixed left sidebar (220px, #F0EDE6) with sections nav and Download button `<a id="dlbtn" href="advisory-note-[YYYYMMDD-HHMM].docx" download="...">⬇  Download Report</a>`. Sections: Advisory Summary | Regulatory Perimeter | [one per in-scope regulator] | Cross-Regulatory Conflicts | Next Steps. IntersectionObserver active nav. Section collapse.
 
 **Print ONLY this in chat:**
 ```
 ✅ Advisory Note complete.
-→ Artifact: /legalant/matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].html
-→ Report:   /legalant/matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].docx
+→ Artifact: matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].html
+→ Report:   matters/[matter-id]/outputs/advisory-note-[YYYYMMDD-HHMM].docx
 ```
 
 ---

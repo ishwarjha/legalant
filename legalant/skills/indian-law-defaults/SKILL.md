@@ -1,3 +1,8 @@
+---
+name: indian-law-defaults
+description: Indian statute and regulatory hierarchy defaults. All agents assume Indian jurisdiction unless overridden. Auto-triggers FEMA for foreign counterparties and SEBI LODR for listed entities.
+---
+
 # Indian Law Defaults
 
 **Unless explicitly instructed otherwise, all legal reasoning defaults to Indian law and Indian jurisdiction.**

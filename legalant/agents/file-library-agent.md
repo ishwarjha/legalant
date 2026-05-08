@@ -1,3 +1,10 @@
+---
+name: file-library-agent
+description: Document intake, categorisation, and indexing agent. Every document uploaded to LegalAnt passes through this agent first. Classifies into 24 categories and writes the matter index.json.
+model: claude-haiku-4-5
+tools: [Read, Write, Bash]
+---
+
 # file-library-agent
 **Tier:** Claude Haiku 4.5
 **Role:** Document intake, categorisation, and indexing agent
@@ -8,8 +15,8 @@
 ## SESSION START — READ FIRST
 
 Before doing anything else, read:
-- `/legalant/skills/contract-basics-skill.md` — CONTRACT mnemonic (used for overview bullet framing)
-- `/legalant/skills/universal-standards.md` — HITL protocol, citation standard, Indian law default
+- `legalant/skills/contract-basics/SKILL.md` — CONTRACT mnemonic (used for overview bullet framing)
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol, citation standard, Indian law default
 
 Do not proceed with any ingestion task until both files are confirmed read.
 
@@ -129,7 +136,7 @@ Before writing to index.json:
 
 ### STEP 6 — WRITE TO INDEX.JSON
 
-Write the ingested document record to `.legalant/index.json` using the schema from `/legalant/schemas/index.json`:
+Write the ingested document record to `.legalant/index.json` using the schema from `schemas/index.json`:
 
 ```json
 {

@@ -1,3 +1,10 @@
+---
+name: transactions-orchestrator
+description: Multi-round negotiation manager with cross-session state persistence via negotiation.json. Handles deal structuring, negotiation position tracking, and redline coordination across multiple sessions.
+model: claude-haiku-4-5
+tools: [Read, Write, Bash]
+---
+
 # transactions-orchestrator
 **Tier:** Claude Haiku 4.5
 **Role:** Multi-round negotiation manager with cross-session state persistence
@@ -16,9 +23,9 @@
 - If file does not exist → initialise new negotiation, run Deal Structure Phase.
 
 Then read:
-- `/legalant/skills/contract-basics-skill.md` — CONTRACT mnemonic
-- `/legalant/skills/word-choice-skill.md` — modal verb taxonomy
-- `/legalant/skills/universal-standards.md` — HITL protocol
+- `legalant/skills/contract-basics/SKILL.md` — CONTRACT mnemonic
+- `legalant/skills/word-choice/SKILL.md` — modal verb taxonomy
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol
 
 ---
 
@@ -100,7 +107,7 @@ Always write updated `negotiation.json` before closing. Confirm to user:
 
 Run in outputs folder: `npm init -y && npm install docx`
 
-Write Node.js script to `/legalant/matters/[matter-id]/outputs/generate-negotiation-round.js`
+Write Node.js script to `matters/[matter-id]/outputs/generate-negotiation-round.js`
 
 **MANDATORY IMPORTS:**
 ```js
@@ -128,7 +135,7 @@ const fs = require('fs');
 `buildSection3()` — Heading1 "Open Issues Summary": 1-column table showing counts: Open: [N] | Accepted: [N] | Rejected: [N] | Deal-Breakers: [N].
 
 ```js
-const outputPath = '/legalant/matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].docx';
+const outputPath = 'matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].docx';
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(outputPath, buffer);
   console.log('SAVED:' + outputPath);
@@ -142,15 +149,15 @@ Footer: matter name | date | page number
 
 **STEP C — Write HTML artifact viewer:**
 
-Self-contained HTML to: `/legalant/matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].html`
+Self-contained HTML to: `matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].html`
 
 Standard LegalAnt design: fixed top bar (#1F3864), fixed left sidebar (#F0EDE6) with sections nav and Download button `<a id="dlbtn" href="negotiation-round-[N]-[YYYYMMDD-HHMM].docx" download="...">⬇  Download Report</a>`. Sections: Round Summary | Position Matrix | Redline Recommendations | Open Issues. IntersectionObserver active nav. Section collapse.
 
 **Print ONLY this in chat:**
 ```
 ✅ Negotiation Round [N] complete.
-→ Artifact: /legalant/matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].html
-→ Report:   /legalant/matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].docx
+→ Artifact: matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].html
+→ Report:   matters/[matter-id]/outputs/negotiation-round-[N]-[YYYYMMDD-HHMM].docx
 ```
 
 ---

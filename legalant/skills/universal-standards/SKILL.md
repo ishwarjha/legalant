@@ -1,3 +1,8 @@
+---
+name: universal-standards
+description: LegalAnt operating protocol — HITL gates, citation completeness, hallucination defence, Indian law default, data security, and mandatory disclaimer. Applies to every agent on every matter.
+---
+
 # Universal Standards — LegalAnt Operating Protocol
 
 **These rules apply to every agent in every matter without exception.**

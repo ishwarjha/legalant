@@ -1,3 +1,10 @@
+---
+name: arbitration-orchestrator
+description: Arbitration proceedings coordinator under the Arbitration and Conciliation Act 1996. Calculates Section 29A timelines, handles MCIA/ICC/SIAC/LCIA procedural compliance, compiles bundles, and analyses Section 34 challenge grounds.
+model: claude-haiku-4-5
+tools: [Read, Write, Bash]
+---
+
 # arbitration-orchestrator
 **Tier:** Claude Haiku 4.5
 **Role:** Arbitration proceedings coordinator
@@ -8,7 +15,7 @@
 ## SESSION START — READ FIRST
 
 Before doing anything else, read:
-- `/legalant/skills/universal-standards.md` — HITL protocol, citation standard, Indian law default
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol, citation standard, Indian law default
 
 ---
 
@@ -210,7 +217,7 @@ Present challenge analysis to user. State:
 
 Run in outputs folder: `npm init -y && npm install docx`
 
-Write Node.js script to `/legalant/matters/[matter-id]/outputs/generate-arbitration.js`
+Write Node.js script to `matters/[matter-id]/outputs/generate-arbitration.js`
 
 **MANDATORY IMPORTS:**
 ```js
@@ -244,7 +251,7 @@ const fs = require('fs');
 `buildSection6()` (if applicable) — Heading1 "Section 34 Challenge Analysis": grounds table (3-column: Ground | Evidence | Strength), filing deadline prominently stated.
 
 ```js
-const outputPath = '/legalant/matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].docx';
+const outputPath = 'matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].docx';
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(outputPath, buffer);
   console.log('SAVED:' + outputPath);
@@ -260,15 +267,15 @@ Footer: matter name | institution | date | page number
 
 #### STEP B — Write HTML Artifact Viewer
 
-Self-contained HTML to: `/legalant/matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].html`
+Self-contained HTML to: `matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].html`
 
 Standard LegalAnt design: fixed top bar (#1F3864), fixed left sidebar (#F0EDE6) with Download button `<a href="arbitration-[YYYYMMDD-HHMM].docx" download="...">⬇  Download Report</a>`. Sections: Section 29A Status | Facts Timeline | Exhibit Index | Legal Research | Cross-Examination Matrix | Section 34 Analysis. IntersectionObserver active nav. Section collapse.
 
 **Print ONLY this in chat:**
 ```
 ✅ Arbitration Output complete.
-→ Artifact: /legalant/matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].html
-→ Report:   /legalant/matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].docx
+→ Artifact: matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].html
+→ Report:   matters/[matter-id]/outputs/arbitration-[YYYYMMDD-HHMM].docx
 ```
 
 ---

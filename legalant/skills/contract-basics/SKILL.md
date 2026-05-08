@@ -1,3 +1,8 @@
+---
+name: contract-basics
+description: The 8-point CONTRACT mnemonic checklist applied to every contract review, redline, and drafting task — Capacity, Offer, Negotiation, Termination, Representations, Ambiguity, Conditions, Taxes.
+---
+
 # Contract Basics — The CONTRACT Mnemonic
 
 **Apply this 8-point checklist to every contract review, redline, and drafting task.**

@@ -20,6 +20,20 @@ Thumbs.db
 # LegalAnt state files (written per-matter at runtime)
 .legalant/
 
+# Local Claude Code project config (plugin source-of-truth lives in legalant/).
+# install.sh copies plugin assets here for local dev; nothing under .claude/ should be tracked.
+.claude/agents/
+.claude/commands/
+.claude/skills/
+.claude/mcp-servers/
+.claude/schemas/
+.claude/agent-memory/
+.claude/settings.local.json
+
+# Sutra orchestrator runtime artifacts
+.learnings/
+active-tasks.md
+
 # Editor
 .vscode/
 .idea/

@@ -1,3 +1,10 @@
+---
+name: real-estate-orchestrator
+description: Real estate transaction coordinator for Indian property law. Handles title chain analysis, revenue records (7/12, Khata, EC), state law compliance, RERA verification, and MCA charges for corporate sellers.
+model: claude-haiku-4-5
+tools: [Read, Write, Bash]
+---
+
 # real-estate-orchestrator
 **Tier:** Claude Haiku 4.5
 **Role:** Real estate transaction coordinator for Indian property law
@@ -8,7 +15,7 @@
 ## SESSION START — READ FIRST
 
 Before doing anything else, read:
-- `/legalant/skills/universal-standards.md` — HITL protocol, citation standard, Indian law default
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol, citation standard, Indian law default
 
 ---
 
@@ -208,7 +215,7 @@ Record in `.legalant/hitl-log.json`.
 
 Run in outputs folder: `npm init -y && npm install docx`
 
-Write Node.js script to `/legalant/matters/[matter-id]/outputs/generate-realestate.js`
+Write Node.js script to `matters/[matter-id]/outputs/generate-realestate.js`
 
 **MANDATORY IMPORTS:**
 ```js
@@ -244,7 +251,7 @@ const fs = require('fs');
 `buildSection7()` — Heading1 "Stamp Duty & Registration": state-specific estimate table (2-column: Item | Amount).
 
 ```js
-const outputPath = '/legalant/matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].docx';
+const outputPath = 'matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].docx';
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(outputPath, buffer);
   console.log('SAVED:' + outputPath);
@@ -260,15 +267,15 @@ Footer: property description | date | page number
 
 #### STEP B — Write HTML Artifact Viewer
 
-Self-contained HTML to: `/legalant/matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].html`
+Self-contained HTML to: `matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].html`
 
 Standard LegalAnt design: fixed top bar (#1F3864), fixed left sidebar (#F0EDE6) with Download button `<a href="realestate-[YYYYMMDD-HHMM].docx" download="...">⬇  Download Report</a>`. Sections: Title Chain | Risk Register | Revenue Records | RERA Status | MCA Charges | Conditions Precedent | Stamp Duty. IntersectionObserver active nav. Section collapse.
 
 **Print ONLY this in chat:**
 ```
 ✅ Property Title Diligence Report complete.
-→ Artifact: /legalant/matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].html
-→ Report:   /legalant/matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].docx
+→ Artifact: matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].html
+→ Report:   matters/[matter-id]/outputs/realestate-[YYYYMMDD-HHMM].docx
 ```
 
 ---

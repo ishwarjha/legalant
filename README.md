@@ -128,7 +128,7 @@ Restart Claude Code after copying rules.
 /plugin list legalant@legalant-marketplace
 ```
 
-You now have 13 agents, 4 bundled skills, and 13 commands.
+You now have 18 agents, 4 bundled skills, and 16 commands.
 
 ---
 
@@ -163,20 +163,27 @@ The curl installer doesn't run in native PowerShell. Use Git Bash, WSL, or the P
 | `/legalant:dd`         | Full due diligence with Red Flag Register and Change of Control Map.                 |
 | `/legalant:inhouse`    | In-house review with two outputs: full legal analysis and a plain-language brief.    |
 | `/legalant:index`      | Index documents into the matter library.                                             |
+| `/legalant:litigate`   | Litigation workflow with limitation check, pleading prep, and court-specific format. |
+| `/legalant:realestate` | Real estate transaction with title chain, 7/12 records, RERA, and MCA charges.       |
+| `/legalant:arbitrate`  | Arbitration with Section 29A timeline tracking and MCIA/ICC/SIAC/LCIA compliance.    |
 
 ---
 
 ## Agents
 
-All 13 agents run as Claude Code subagents. `lexis` is the only one you talk to. The rest run internally based on what the matter needs.
+All 18 agents run as Claude Code subagents. `lexis` is the only one you talk to. The rest run internally based on what the matter needs.
 
 **Specialist agents**
 
 `lexis` (Opus) reads every matter, classifies it, and routes to the right agent or orchestrator. `document-review-agent` (Opus) runs the 4-layer CONTRACT protocol. `legal-research-agent` (Opus) searches case law, RBI, and SEBI sources and verifies every citation before it delivers anything. `redline-analysis-agent` (Opus) audits a single contract or compares two versions clause by clause. `translation-agent` (Sonnet) handles 200+ languages and adds Translator's Notes for terms that don't carry across cleanly. `mca-documents-agent` (Opus) walks you through the MCA portal and produces a 10-category summary with RAG rating. `file-library-agent` (Haiku) indexes every document upload before any other agent touches it. `chronology-builder-agent` and `document-table-agent` (both Haiku) handle timelines and bulk field extraction.
 
-**Practice orchestrators**
+**Workflow orchestrators**
 
 `in-house-orchestrator` (Sonnet) covers listed companies, MNCs, and startups. It always produces two outputs: a full legal analysis for the GC and a plain-language brief for the business head. `transactions-orchestrator` (Haiku) manages multi-round negotiations and is the only agent that keeps state between sessions, via `negotiation.json`. `advisory-orchestrator` (Sonnet) maps every applicable regulator before researching anything. `due-diligence-orchestrator` (Haiku) splits documents into four parallel streams and builds the Red Flag Register.
+
+**Practice-area orchestrators**
+
+`litigation-orchestrator` (Sonnet) runs civil and commercial litigation with mandatory limitation-period check and court-specific pleading format. `real-estate-orchestrator` (Haiku) handles title chain analysis, revenue records (7/12, Khata, EC), RERA verification, and MCA charges for corporate sellers. `arbitration-orchestrator` (Haiku) tracks Section 29A timelines and handles MCIA/ICC/SIAC/LCIA procedural compliance plus Section 34 challenge analysis. `banking-finance-orchestrator` (Haiku) reviews facility agreements, security packages, and RBI compliance from both lender and borrower perspectives. `capital-markets-orchestrator` (Sonnet) handles DRHP preparation, business backup, and SEBI observation responses under SEBI ICDR Regulations 2018.
 
 ---
 

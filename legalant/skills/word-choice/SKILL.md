@@ -1,3 +1,8 @@
+---
+name: word-choice
+description: Modal verb taxonomy for legal drafting and redline analysis. Every SHALL/WILL/WOULD/MAY/COULD/MUST shift is automatically Substantive. Applies to every contract review and redline comparison.
+---
+
 # Word Choice — Modal Verb Taxonomy
 
 **Apply to every contract review, redline analysis, and drafting task.**

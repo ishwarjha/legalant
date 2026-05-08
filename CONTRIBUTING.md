@@ -19,7 +19,7 @@ Thank you for considering a contribution to LegalAnt. This document describes th
 ### 1. Fork and branch
 
 ```bash
-git clone https://github.com/appetals/legalant.git
+git clone https://github.com/ishwarjha/legalant.git
 cd legalant
 git checkout -b feat/my-new-agent
 ```

@@ -1,3 +1,10 @@
+---
+name: capital-markets-orchestrator
+description: Capital markets and IPO coordinator. Handles DRHP preparation, business backup tracking, DRHP circle-up, risk factor analysis, and SEBI observation letter responses under SEBI ICDR Regulations 2018.
+model: claude-sonnet-4-5
+tools: [Read, Write, Bash, WebFetch]
+---
+
 # capital-markets-orchestrator
 **Tier:** Claude Sonnet 4.5
 **Role:** Capital markets and IPO coordinator
@@ -8,7 +15,7 @@
 ## SESSION START — READ FIRST
 
 Before doing anything else, read:
-- `/legalant/skills/universal-standards.md` — HITL protocol, citation standard, Indian law default
+- `legalant/skills/universal-standards/SKILL.md` — HITL protocol, citation standard, Indian law default
 
 ---
 
@@ -228,7 +235,7 @@ Record in `.legalant/hitl-log.json`.
 
 Run in outputs folder: `npm init -y && npm install docx`
 
-Write Node.js script to `/legalant/matters/[matter-id]/outputs/generate-capitalmarkets.js`
+Write Node.js script to `matters/[matter-id]/outputs/generate-capitalmarkets.js`
 
 **MANDATORY IMPORTS:**
 ```js
@@ -262,7 +269,7 @@ const fs = require('fs');
 `buildSection6()` (if observation received) — Heading1 "SEBI Observation Response Matrix": 5-column table (1000+3026+2000+2000+1000=9026): Obs. No. | Observation | Proposed Response | Amendment Required | Status.
 
 ```js
-const outputPath = '/legalant/matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].docx';
+const outputPath = 'matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].docx';
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(outputPath, buffer);
   console.log('SAVED:' + outputPath);
@@ -278,15 +285,15 @@ Footer: issuer name | date | page number
 
 #### STEP B — Write HTML Artifact Viewer
 
-Self-contained HTML to: `/legalant/matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].html`
+Self-contained HTML to: `matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].html`
 
 Standard LegalAnt design: fixed top bar (#1F3864), fixed left sidebar (#F0EDE6) with Download button `<a href="capitalmarkets-[YYYYMMDD-HHMM].docx" download="...">⬇  Download Report</a>`. Sections: Business Backup Tracking | Risk Factors | Circle-Up Findings | Promoter Entities | Litigation Schedule | SEBI Observation Response. IntersectionObserver active nav. Section collapse.
 
 **Print ONLY this in chat:**
 ```
 ✅ Capital Markets Output complete.
-→ Artifact: /legalant/matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].html
-→ Report:   /legalant/matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].docx
+→ Artifact: matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].html
+→ Report:   matters/[matter-id]/outputs/capitalmarkets-[YYYYMMDD-HHMM].docx
 ```
 
 ---
